@@ -1,0 +1,57 @@
+x-shared-env:
+  &shared-env
+  SICOIN_KEYCLOAK_ISSUER: http://keycloak:8080/realms/sicoin
+services:
+
+  sicoin_server:
+    image: sicoin_server:latest
+    container_name: sicoin_server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8088:8088"
+    networks:
+      - sicoin-net
+    environment:
+      <<: *shared-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sicoin
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:16
+    container_name: postgres-sicoin
+    ports:
+      - "5432:5432"
+    networks:
+      - sicoin-net
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1215141719303060
+      POSTGRES_DB: postgres
+    volumes:
+      - sicoin_postgres_data:/var/lib/postgresql/data
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.2
+    container_name: keycloak-sicoin
+    ports:
+      - "8081:8080"
+    networks:
+      - sicoin-net
+    volumes:
+      - sicoin_keycloak_data:/opt/keycloak/data
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+      KC_HTTP_ENABLED: "true"
+    command: ["start-dev"]
+
+networks:
+  sicoin-net:
+
+volumes:
+  sicoin_keycloak_data:
+  sicoin_postgres_data:
+
