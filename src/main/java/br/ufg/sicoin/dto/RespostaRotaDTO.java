@@ -1,11 +1,15 @@
 package br.ufg.sicoin.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.Instant;
 import java.util.List;
 
 @Data
+@Builder
+@AllArgsConstructor
 public class RespostaRotaDTO {
 
     /**
@@ -14,6 +18,8 @@ public class RespostaRotaDTO {
     private List<String> polylines;
 
     private Instant timestamp;
+
+    private String googleStatus;
 
     public RespostaRotaDTO(){
         this.timestamp = Instant.now();

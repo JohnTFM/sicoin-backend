@@ -13,4 +13,8 @@ public class RequisicaoCaminhaoRotaDTO {
 
     String longitude;
 
+    public Geolocalizacao getGeolocalizacao(){
+        return new Geolocalizacao(latitude, longitude);
+    }
+
 }

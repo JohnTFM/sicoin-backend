@@ -1,7 +1,19 @@
 package br.ufg.sicoin.service;
 
+import br.ufg.sicoin.dto.DirectionsResponse;
+import br.ufg.sicoin.dto.Geolocalizacao;
+import br.ufg.sicoin.dto.RespostaRotaDTO;
+import br.ufg.sicoin.model.lixeira.Lixeira;
 import br.ufg.sicoin.repository.LixeiraRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>Exemplo de requisição:</p>
@@ -11,6 +23,87 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoogleMapsService {
 
+    //smp latitude,longitude
+
     LixeiraRepository lixeiraRepository;
+
+    @Value("${sicoin.google-api-key}")
+    String googleApiKey;
+
+    @Value("${sicoin.google-maps-host-json}")
+    String googleMapsHost;
+
+    public RespostaRotaDTO criarRota(Geolocalizacao geolocalizacao) {
+        List<Lixeira> lixeiras = new ArrayList<>();
+
+        lixeiras.add(Lixeira.builder()
+                .latitude(-16.59793650250547D)
+                .longitude(-49.26148284733547)
+                .build()
+        );
+
+        lixeiras.add(Lixeira.builder()
+                .latitude(-16.599475313024744)
+                .longitude(-49.25959056509277)
+                .build()
+        );
+
+        Lixeira ultimaLixeira = lixeiras.getLast();
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = googleMapsHost + "?origin={origin}&destination={destination}&waypoints={waypoints}&key={key}";
+
+        Map<String, String> params = new HashMap<>();
+        params.put("origin", geolocalizacao.getLatitude()+","+geolocalizacao.getLongitude());
+        params.put("destination", ultimaLixeira.getLatitude() + "," + ultimaLixeira.getLongitude());
+        params.put("waypoints",construirWaypoints(lixeiras));
+        params.put("key", googleApiKey);
+
+        DirectionsResponse response = restTemplate.getForObject(url, DirectionsResponse.class,params);
+
+        if(response!=null && response.getStatus().equals("OK")){
+            List<String> polylines = response.getRoutes().stream()
+                    .flatMap(r -> r.getLegs().stream())
+                    .flatMap(leg -> leg.getSteps().stream())
+                    .map(step -> step.getPolyline().getPoints())
+                    .toList();
+
+            RespostaRotaDTO respostaRotaDTO = new RespostaRotaDTO();
+            respostaRotaDTO.setPolylines(polylines);
+            respostaRotaDTO.setTimestamp(Instant.now());
+            respostaRotaDTO.setGoogleStatus(response.getStatus());
+            return respostaRotaDTO;
+
+        }
+
+        if(response!=null){
+            RespostaRotaDTO respostaRotaDTO = new RespostaRotaDTO();
+            respostaRotaDTO.setPolylines(null);
+            respostaRotaDTO.setTimestamp(Instant.now());
+            respostaRotaDTO.setGoogleStatus(response.getStatus());
+            return respostaRotaDTO;
+        }
+        throw new RuntimeException("Ocorreu um erro com a requisição!");
+    }
+
+    private String construirWaypoints(List<Lixeira> lix){
+        List<Lixeira> lixeirasWaypoints = new ArrayList<>(lix);
+        lixeirasWaypoints.removeLast();
+
+        String waypointsParam = "";
+
+        for (int i = 0; i < lixeirasWaypoints.size(); i++) {
+            Lixeira lixeira = lixeirasWaypoints.get(i);
+            if(i==0){
+                waypointsParam+="optimize:true|"+lixeira.getLatitude()+","+lixeira.getLongitude();
+            }else {
+                waypointsParam+="|"+lixeira.getLatitude()+","+lixeira.getLongitude();
+            }
+        }
+
+        return waypointsParam;
+    }
+
 
 }
