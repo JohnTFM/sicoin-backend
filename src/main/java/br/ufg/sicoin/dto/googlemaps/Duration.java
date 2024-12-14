@@ -1,4 +1,4 @@
-package br.ufg.sicoin.dto;
+package br.ufg.sicoin.dto.googlemaps;
 
 
 import lombok.Data;

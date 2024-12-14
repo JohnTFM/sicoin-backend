@@ -1,6 +1,6 @@
 package br.ufg.sicoin.service;
 
-import br.ufg.sicoin.dto.DirectionsResponse;
+import br.ufg.sicoin.dto.googlemaps.DirectionsResponse;
 import br.ufg.sicoin.dto.Geolocalizacao;
 import br.ufg.sicoin.dto.RespostaRotaDTO;
 import br.ufg.sicoin.model.lixeira.Lixeira;
@@ -35,6 +35,7 @@ public class GoogleMapsService {
 
     public RespostaRotaDTO criarRota(Geolocalizacao geolocalizacao) {
         List<Lixeira> lixeiras = new ArrayList<>();
+        RespostaRotaDTO respostaRotaDTO = new RespostaRotaDTO();
 
         lixeiras.add(Lixeira.builder()
                 .latitude(-16.59793650250547D)
@@ -47,6 +48,8 @@ public class GoogleMapsService {
                 .longitude(-49.25959056509277)
                 .build()
         );
+
+        respostaRotaDTO.setLixeiras(lixeiras);
 
         Lixeira ultimaLixeira = lixeiras.getLast();
 
@@ -69,7 +72,6 @@ public class GoogleMapsService {
                     .map(step -> step.getPolyline().getPoints())
                     .toList();
 
-            RespostaRotaDTO respostaRotaDTO = new RespostaRotaDTO();
             respostaRotaDTO.setPolylines(polylines);
             respostaRotaDTO.setTimestamp(Instant.now());
             respostaRotaDTO.setGoogleStatus(response.getStatus());
@@ -78,7 +80,6 @@ public class GoogleMapsService {
         }
 
         if(response!=null){
-            RespostaRotaDTO respostaRotaDTO = new RespostaRotaDTO();
             respostaRotaDTO.setPolylines(null);
             respostaRotaDTO.setTimestamp(Instant.now());
             respostaRotaDTO.setGoogleStatus(response.getStatus());

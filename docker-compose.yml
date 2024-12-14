@@ -4,6 +4,8 @@ x-shared-env:
 services:
 
   sicoin_server:
+    profiles:
+      - prod
     image: sicoin_server:latest
     container_name: sicoin_server
     build:
@@ -19,6 +21,9 @@ services:
     depends_on:
       - postgres
   postgres:
+    profiles:
+      - dev
+      - prod
     image: postgres:16
     container_name: postgres-sicoin
     ports:
@@ -33,6 +38,9 @@ services:
       - sicoin_postgres_data:/var/lib/postgresql/data
 
   keycloak:
+    profiles:
+      - dev
+      - prod
     image: quay.io/keycloak/keycloak:25.0.2
     container_name: keycloak-sicoin
     ports:

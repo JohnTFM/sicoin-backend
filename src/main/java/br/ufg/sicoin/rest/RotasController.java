@@ -16,7 +16,7 @@ public class RotasController {
 
     @PostMapping
     public ResponseEntity<RespostaRotaDTO> obterRota(@RequestBody RequisicaoCaminhaoRotaDTO requisicaoCaminhaoRotaDTO){
-        return ResponseEntity.ok(googleMapsService.criarRota(requisicaoCaminhaoRotaDTO.getGeolocalizacao()));
+        return ResponseEntity.ok(googleMapsService.criarRota(requisicaoCaminhaoRotaDTO.obterGeolocalizacao()));
     }
 
 }
