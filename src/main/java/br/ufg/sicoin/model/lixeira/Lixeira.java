@@ -1,7 +1,5 @@
 package br.ufg.sicoin.model.lixeira;
 
-import br.ufg.sicoin.model.regiao.Regiao;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Entity
 @Table(name = "lixeira")
@@ -52,10 +49,5 @@ public class Lixeira {
     Instant ultimaAtualizacao;
 
     Instant momentoUltimaColeta;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "regiao_id")
-    @JsonIgnore
-    Regiao regiao;
 
 }

@@ -32,7 +32,7 @@ public interface LixeiraRepository extends JpaRepository<Lixeira, Long> {
                    cos(radians(:lat)) * cos(radians(l.latitude)) *
                    cos(radians(l.longitude) - radians(:lon)) +
                    sin(radians(:lat)) * sin(radians(l.latitude))
-               )) <= :radius
+               )) <= :radius and ( l.volume_atual/l.volume_maximo )  >= :minimo_volume_preenchido_porcentagem_decimal
         ORDER BY (6371 * acos(
                    cos(radians(:lat)) * cos(radians(l.latitude)) *
                    cos(radians(l.longitude) - radians(:lon)) +
@@ -42,7 +42,8 @@ public interface LixeiraRepository extends JpaRepository<Lixeira, Long> {
     List<Lixeira> findNearbyLixeiras(
             @Param("lat") double latitude,
             @Param("lon") double longitude,
-            @Param("radius") double radiusInKm
+            @Param("radius") double radiusInKm,
+            @Param("minimo_volume_preenchido_porcentagem_decimal") double minimoVolume
     );
 
 

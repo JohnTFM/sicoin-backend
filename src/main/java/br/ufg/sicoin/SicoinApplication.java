@@ -33,6 +33,7 @@ public class SicoinApplication {
 		lixeira.setLongitude(-49.2624442018294D);
 		lixeira.setPesoMaximo(1500D);
 		lixeira.setVolumeMaximo(589D);
+		lixeira.setVolumeAtual(58D);
 		lixeiraRepository.save(lixeira);
 
 		em.detach(lixeira);

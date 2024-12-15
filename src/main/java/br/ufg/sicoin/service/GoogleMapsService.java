@@ -38,17 +38,20 @@ public class GoogleMapsService {
 
     @Transactional
     public RespostaRotaDTO criarRota(RequisicaoCaminhaoRotaDTO geolocalizacao) {
-
+        double minimoVolume = 0.015;
         List<Lixeira> lixeiras = lixeiraService.obterLixeirasProximas(
                 geolocalizacao.getLatitude(),
                 geolocalizacao.getLongitude(),
-                geolocalizacao.getKilometrosLimite()
+                geolocalizacao.getKilometrosLimite(),
+                minimoVolume
         );
 
         RespostaRotaDTO respostaRotaDTO = new RespostaRotaDTO();
 
         if(lixeiras.isEmpty()) {
-            respostaRotaDTO.setBackendStatus("NENHUMA LIXEIRA ENCONTRADA EM UM RÁIO DE 1KM PRÓXIMA!");
+            respostaRotaDTO.setBackendStatus("NENHUMA LIXEIRA PRÓXIMA " +
+                    "ENCONTRADA EM UM RÁIO DE "+geolocalizacao.getKilometrosLimite()+"Km COM VOLUME PREENCHIDO DE NO MÍNIMO " +
+                    (minimoVolume*100) + "% ");
             return respostaRotaDTO;
         }
 

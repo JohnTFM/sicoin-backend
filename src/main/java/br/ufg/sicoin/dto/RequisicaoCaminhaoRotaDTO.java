@@ -2,16 +2,13 @@ package br.ufg.sicoin.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequisicaoCaminhaoRotaDTO {
-
-    Double latitude;
-
-    Double longitude;
-
+@EqualsAndHashCode(callSuper = true)
+public class RequisicaoCaminhaoRotaDTO extends GeolocalizacaoDTO {
     double kilometrosLimite;
 }

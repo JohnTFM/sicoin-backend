@@ -1,6 +1,6 @@
 package br.ufg.sicoin.rest;
 
-import br.ufg.sicoin.dto.LoginR;
+import br.ufg.sicoin.dto.RequisicaoLoginDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +29,7 @@ public class AutenticacaoController {
 
     @Operation(summary = "Request Token", description = "Login ", security = @SecurityRequirement(name = "security_auth"))
     @PostMapping("/login")
-    public ResponseEntity<String> token(@RequestBody LoginR user) {
+    public ResponseEntity<String> token(@RequestBody RequisicaoLoginDTO user) {
 
         HttpHeaders headers = new HttpHeaders();
         RestTemplate rt = new RestTemplate();

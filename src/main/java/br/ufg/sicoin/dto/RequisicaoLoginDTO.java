@@ -1,6 +1,6 @@
 package br.ufg.sicoin.dto;
 
-public record LoginR(
+public record RequisicaoLoginDTO(
         String login,
         String senha
 ) {
