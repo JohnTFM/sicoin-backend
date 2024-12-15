@@ -24,6 +24,8 @@ public class RespostaRotaDTO {
 
     private String googleStatus;
 
+    private String backendStatus;
+
     public RespostaRotaDTO(){
         this.timestamp = Instant.now();
     }

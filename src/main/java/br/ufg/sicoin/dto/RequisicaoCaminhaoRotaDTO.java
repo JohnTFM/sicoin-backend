@@ -9,12 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequisicaoCaminhaoRotaDTO {
 
-    String latitude;
+    Double latitude;
 
-    String longitude;
+    Double longitude;
 
-    public Geolocalizacao obterGeolocalizacao(){
-        return new Geolocalizacao(latitude, longitude);
-    }
-
+    double kilometrosLimite;
 }

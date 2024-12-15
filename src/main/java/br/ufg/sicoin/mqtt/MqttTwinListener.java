@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +16,18 @@ import java.time.Instant;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class MqttTwinListener implements IMqttMessageListener {
+public class MqttTwinListener implements MqttCallback {
 
     private final LixeiraRepository lixeiraRepository;
 
     private final ObjectMapper objectMapper;
+
+    @Override
+    public void connectionLost(Throwable throwable) {
+
+        log.error("Conexão ao MQTT PERDIDA!");
+
+    }
 
     @Override
     @Transactional
@@ -28,22 +36,21 @@ public class MqttTwinListener implements IMqttMessageListener {
         try{
             LixeiraSinalDTO dto = objectMapper.readValue(new String(mqttMessage.getPayload()), LixeiraSinalDTO.class);
 
-            log.info(dto.getLatitude().toString());
-
-            log.info(dto.getLongitude().toString());
-
             lixeiraRepository.atualizarLixeiraDoMqqtt(
                     dto.getId(),
                     dto.getPesoAtual(),
                     dto.getVolumeAtual(),
-                    Instant.now(),
-                    dto.getLatitude(),
-                    dto.getLongitude()
+                    Instant.now()
             );
 
         }catch (Exception e){
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+        //nao sera enviada mensagens ao broker
     }
 }

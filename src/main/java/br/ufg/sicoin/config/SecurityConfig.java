@@ -30,6 +30,7 @@ public class SecurityConfig {
             requests.requestMatchers("/swagger-ui/**").permitAll();
             requests.anyRequest().authenticated();
         });
+        //http://localhost:8088/swagger-ui/index.html
 
         return http.build();
     }

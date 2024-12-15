@@ -28,15 +28,26 @@ public class SicoinApplication {
 	public void init() {
 		Lixeira lixeira = new Lixeira();
 		lixeira.setId("L1");
-		lixeira.setLatitude(-16.606789D);
-		lixeira.setLongitude(-49.24881D);
+		//Lixeira do meu condomínio (Condomínio Boreal)
+		lixeira.setLatitude(-16.595453197788743D);
+		lixeira.setLongitude(-49.2624442018294D);
 		lixeira.setPesoMaximo(1500D);
 		lixeira.setVolumeMaximo(589D);
 		lixeiraRepository.save(lixeira);
 
 		em.detach(lixeira);
+		//Lixeira em frente à academia perto da UFG
+		lixeira.setLatitude(-16.59878392965019);
+		lixeira.setLongitude(-49.259560087449245);
+		lixeira.setId("L3");
+
+		lixeiraRepository.save(lixeira);
+
+		em.detach(lixeira);
 
 		lixeira.setId("L2");
+		lixeira.setLatitude(-16.606142443742005);
+		lixeira.setLongitude(-49.255259793705314);
 
 		lixeiraRepository.save(lixeira);
 

@@ -1,5 +1,7 @@
 package br.ufg.sicoin.model.lixeira;
 
+import br.ufg.sicoin.model.regiao.Regiao;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,5 +52,10 @@ public class Lixeira {
     Instant ultimaAtualizacao;
 
     Instant momentoUltimaColeta;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "regiao_id")
+    @JsonIgnore
+    Regiao regiao;
 
 }

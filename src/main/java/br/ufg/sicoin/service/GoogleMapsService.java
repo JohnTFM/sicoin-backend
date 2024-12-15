@@ -1,10 +1,12 @@
 package br.ufg.sicoin.service;
 
+import br.ufg.sicoin.dto.RequisicaoCaminhaoRotaDTO;
 import br.ufg.sicoin.dto.googlemaps.DirectionsResponse;
-import br.ufg.sicoin.dto.Geolocalizacao;
 import br.ufg.sicoin.dto.RespostaRotaDTO;
 import br.ufg.sicoin.model.lixeira.Lixeira;
 import br.ufg.sicoin.repository.LixeiraRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,11 +23,12 @@ import java.util.Map;
  * <p>Explicação: ..../json?origin={latitude},{longitude}&destination={latitude},{longitude}&waypoints=optimize:true|{latitude},{longitude}|{latitude},{longitude}&key={api_key}</p>
  */
 @Service
+@RequiredArgsConstructor
 public class GoogleMapsService {
 
-    //smp latitude,longitude
+    private static final double EARTH_RADIUS = 6371.0088; // Raio da Terra em km (WGS84)
 
-    LixeiraRepository lixeiraRepository;
+    private final LixeiraService lixeiraService;
 
     @Value("${sicoin.google-api-key}")
     String googleApiKey;
@@ -33,21 +36,21 @@ public class GoogleMapsService {
     @Value("${sicoin.google-maps-host-json}")
     String googleMapsHost;
 
-    public RespostaRotaDTO criarRota(Geolocalizacao geolocalizacao) {
-        List<Lixeira> lixeiras = new ArrayList<>();
+    @Transactional
+    public RespostaRotaDTO criarRota(RequisicaoCaminhaoRotaDTO geolocalizacao) {
+
+        List<Lixeira> lixeiras = lixeiraService.obterLixeirasProximas(
+                geolocalizacao.getLatitude(),
+                geolocalizacao.getLongitude(),
+                geolocalizacao.getKilometrosLimite()
+        );
+
         RespostaRotaDTO respostaRotaDTO = new RespostaRotaDTO();
 
-        lixeiras.add(Lixeira.builder()
-                .latitude(-16.59793650250547D)
-                .longitude(-49.26148284733547)
-                .build()
-        );
-
-        lixeiras.add(Lixeira.builder()
-                .latitude(-16.599475313024744)
-                .longitude(-49.25959056509277)
-                .build()
-        );
+        if(lixeiras.isEmpty()) {
+            respostaRotaDTO.setBackendStatus("NENHUMA LIXEIRA ENCONTRADA EM UM RÁIO DE 1KM PRÓXIMA!");
+            return respostaRotaDTO;
+        }
 
         respostaRotaDTO.setLixeiras(lixeiras);
 
@@ -75,6 +78,7 @@ public class GoogleMapsService {
             respostaRotaDTO.setPolylines(polylines);
             respostaRotaDTO.setTimestamp(Instant.now());
             respostaRotaDTO.setGoogleStatus(response.getStatus());
+            respostaRotaDTO.setBackendStatus(response.getStatus());
             return respostaRotaDTO;
 
         }
@@ -83,6 +87,7 @@ public class GoogleMapsService {
             respostaRotaDTO.setPolylines(null);
             respostaRotaDTO.setTimestamp(Instant.now());
             respostaRotaDTO.setGoogleStatus(response.getStatus());
+            respostaRotaDTO.setBackendStatus(response.getStatus());
             return respostaRotaDTO;
         }
         throw new RuntimeException("Ocorreu um erro com a requisição!");
@@ -104,6 +109,38 @@ public class GoogleMapsService {
         }
 
         return waypointsParam;
+    }
+
+    /**
+     * Verifica se o lat1 e lon1 está perto com uma "distance" de lat2 e lon2.
+     * @param lat1 passe em graus
+     * @param lon1 passe em graus
+     * @param lat2 passe em graus
+     * @param lon2 passe em graus
+     * @param distance passe em metros
+     * @return
+     */
+    public static boolean estaPerto(double lat1, double lon1, double lat2, double lon2, double distance) {
+        // Converter graus para radianos
+        double lat1Rad = Math.toRadians(lat1);
+        double lon1Rad = Math.toRadians(lon1);
+        double lat2Rad = Math.toRadians(lat2);
+        double lon2Rad = Math.toRadians(lon2);
+
+        // Diferença das coordenadas
+        double deltaLat = lat2Rad - lat1Rad;
+        double deltaLon = lon2Rad - lon1Rad;
+
+        // Fórmula de Haversine
+        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2)
+                + Math.cos(lat1Rad) * Math.cos(lat2Rad)
+                * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distanceBetweenPoints = EARTH_RADIUS * c;
+
+        // Verificar se a distância está dentro do limite
+        return distanceBetweenPoints <= distance;
     }
 
 

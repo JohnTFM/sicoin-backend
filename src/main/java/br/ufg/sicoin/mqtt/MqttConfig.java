@@ -44,7 +44,7 @@ public class MqttConfig {
         MqttConnectOptions options = new MqttConnectOptions();
         options.setAutomaticReconnect(true);
         options.setCleanSession(true);
-        options.setConnectionTimeout(10);
+        options.setConnectionTimeout(3);
         return options;
     }
 
