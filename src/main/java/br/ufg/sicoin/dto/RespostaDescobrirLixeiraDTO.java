@@ -12,10 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 public class RespostaDescobrirLixeiraDTO {
 
-    List<Lixeira> lixeiras;
+    List<Lixeira> lixeirasProximasPreenchidas;
 
     public RespostaDescobrirLixeiraDTO(List<Lixeira> lixeiras) {
-        this.lixeiras = lixeiras;
+        this.lixeirasProximasPreenchidas = lixeiras;
     }
 
 }
