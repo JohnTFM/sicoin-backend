@@ -10,7 +10,7 @@ import org.springframework.security.core.parameters.P;
 import java.time.Instant;
 import java.util.List;
 
-public interface LixeiraRepository extends JpaRepository<Lixeira, Long> {
+public interface LixeiraRepository extends JpaRepository<Lixeira, String> {
 
     @Query("update Lixeira l set " +
             "l.pesoAtual = :pesoAtual, " +

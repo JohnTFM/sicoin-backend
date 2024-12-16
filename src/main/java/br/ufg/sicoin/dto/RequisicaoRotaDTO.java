@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class RequisicaoCaminhaoRotaDTO extends GeolocalizacaoDTO {
+public class RequisicaoRotaDTO extends GeolocalizacaoDTO {
     double kilometrosLimite;
 }

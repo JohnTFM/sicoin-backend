@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class RequisicaoInformarCaminhaoDTO extends GeolocalizacaoDTO {
+public class RequisicaoDescobrirLixeirasDTO extends GeolocalizacaoDTO {
 
     Long idCaminhao;
 

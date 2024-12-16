@@ -1,10 +1,9 @@
 package br.ufg.sicoin.service;
 
-import br.ufg.sicoin.dto.RequisicaoCaminhaoRotaDTO;
+import br.ufg.sicoin.dto.RequisicaoRotaDTO;
 import br.ufg.sicoin.dto.googlemaps.DirectionsResponse;
 import br.ufg.sicoin.dto.RespostaRotaDTO;
 import br.ufg.sicoin.model.lixeira.Lixeira;
-import br.ufg.sicoin.repository.LixeiraRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +36,7 @@ public class GoogleMapsService {
     String googleMapsHost;
 
     @Transactional
-    public RespostaRotaDTO criarRota(RequisicaoCaminhaoRotaDTO geolocalizacao) {
+    public RespostaRotaDTO criarRota(RequisicaoRotaDTO geolocalizacao) {
         double minimoVolume = 0.015;
         List<Lixeira> lixeiras = lixeiraService.obterLixeirasProximas(
                 geolocalizacao.getLatitude(),

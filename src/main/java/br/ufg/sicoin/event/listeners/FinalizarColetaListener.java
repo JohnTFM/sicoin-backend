@@ -15,7 +15,7 @@ public class FinalizarColetaListener {
 
     @EventListener
     @Async
-    public void handleFinalizarColeta(FinalizarColetaEvent finalizarColetaEvent) {
+    public void handleColeta(FinalizarColetaEvent finalizarColetaEvent) {
 
         this.finalizarColetaEventRepository.save(finalizarColetaEvent);
 

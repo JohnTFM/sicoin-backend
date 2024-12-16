@@ -11,6 +11,4 @@ public class RequisicaoInformarPossivelColetaDTO extends GeolocalizacaoDTO {
 
     private Long caminhaoId;
 
-
-
 }

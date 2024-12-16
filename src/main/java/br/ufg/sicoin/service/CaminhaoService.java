@@ -1,6 +1,6 @@
 package br.ufg.sicoin.service;
 
-import br.ufg.sicoin.dto.RequisicaoInformarCaminhaoDTO;
+import br.ufg.sicoin.dto.RequisicaoDescobrirLixeirasDTO;
 import br.ufg.sicoin.dto.RespostaDescobrirLixeiraDTO;
 import br.ufg.sicoin.model.evento.FinalizarColetaEvent;
 import br.ufg.sicoin.model.evento.IniciarColetaEvent;
@@ -24,7 +24,7 @@ public class CaminhaoService {
     private final LixeiraService lixeiraService;
 
     @Transactional
-    public void atualizarDados(RequisicaoInformarCaminhaoDTO informarCaminhaoDTO) {
+    public void atualizarDados(RequisicaoDescobrirLixeirasDTO informarCaminhaoDTO) {
        Caminhao caminhaoAtualizar = caminhaoRepository.findById(informarCaminhaoDTO.getIdCaminhao()).orElseThrow(()->new CaminhaoAusenteException(informarCaminhaoDTO.getIdCaminhao()));
 
        boolean iniciouRota = !caminhaoAtualizar.getEstado().equals(EstadoCaminhao.EM_ROTA) && informarCaminhaoDTO.getEstadoCaminhao().equals(EstadoCaminhao.EM_ROTA);
@@ -44,7 +44,7 @@ public class CaminhaoService {
 
     }
 
-    public RespostaDescobrirLixeiraDTO verificarLixeirasCheias(RequisicaoInformarCaminhaoDTO informarCaminhaoDTO) {
+    public RespostaDescobrirLixeiraDTO verificarLixeirasCheias(RequisicaoDescobrirLixeirasDTO informarCaminhaoDTO) {
         return new RespostaDescobrirLixeiraDTO(lixeiraService.obterLixeirasProximas(
                 informarCaminhaoDTO.getLatitude(),
                 informarCaminhaoDTO.getLongitude(),
