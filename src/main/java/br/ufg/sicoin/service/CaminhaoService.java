@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CaminhaoService {
@@ -51,5 +53,10 @@ public class CaminhaoService {
                 informarCaminhaoDTO.getDistanciaMaximaLixeira(),
                 informarCaminhaoDTO.getVolumeMinimoLixeira()
         ));
+    }
+
+    public List<Caminhao> obterTodosOsCaminhoes()
+    {
+        return caminhaoRepository.findAllCaminhoes();
     }
 }

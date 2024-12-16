@@ -17,12 +17,13 @@ public class LixeiraService {
     private final LixeiraRepository lixeiraRepository;
 
     @Transactional
-    public List<Lixeira> obterLixeirasProximas(Double lt, Double lg,Double distanciaKm){
-        return lixeiraRepository.findNearbyLixeiras(lt,lg,distanciaKm,0.01);
+    public List<Lixeira> obterLixeirasProximas(Double lt, Double lg, Double distanciaKm) {
+        return lixeiraRepository.findNearbyLixeiras(lt, lg, distanciaKm, 0.01);
     }
+
     @Transactional
-    public List<Lixeira> obterLixeirasProximas(Double lt, Double lg,Double distanciaKm, Double minimoVolume){
-        return lixeiraRepository.findNearbyLixeiras(lt,lg,distanciaKm,minimoVolume);
+    public List<Lixeira> obterLixeirasProximas(Double lt, Double lg, Double distanciaKm, Double minimoVolume) {
+        return lixeiraRepository.findNearbyLixeiras(lt, lg, distanciaKm, minimoVolume);
     }
 
     @Transactional
@@ -35,5 +36,8 @@ public class LixeiraService {
         );
     }
 
-
+    public List<Lixeira> obterTodasAsLixeiras()
+    {
+        return lixeiraRepository.findAllLixeiras();
+    }
 }

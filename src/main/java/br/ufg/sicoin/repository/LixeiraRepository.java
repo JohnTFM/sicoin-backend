@@ -23,22 +23,22 @@ public interface LixeiraRepository extends JpaRepository<Lixeira, String> {
             @Param("pesoAtual") Double pesoAtual,
             @Param("volumeAtual") Double volumeAtual,
             @Param("timestamp") Instant timestamp
-            );
+    );
 
     @Query(value = """
-        SELECT l.*
-        FROM lixeira l
-        WHERE (6371 * acos(
-                   cos(radians(:lat)) * cos(radians(l.latitude)) *
-                   cos(radians(l.longitude) - radians(:lon)) +
-                   sin(radians(:lat)) * sin(radians(l.latitude))
-               )) <= :radius and ( l.volume_atual/l.volume_maximo )  >= :minimo_volume_preenchido_porcentagem_decimal
-        ORDER BY (6371 * acos(
-                   cos(radians(:lat)) * cos(radians(l.latitude)) *
-                   cos(radians(l.longitude) - radians(:lon)) +
-                   sin(radians(:lat)) * sin(radians(l.latitude))
-               )) ASC
-        """, nativeQuery = true)
+            SELECT l.*
+            FROM lixeira l
+            WHERE (6371 * acos(
+                       cos(radians(:lat)) * cos(radians(l.latitude)) *
+                       cos(radians(l.longitude) - radians(:lon)) +
+                       sin(radians(:lat)) * sin(radians(l.latitude))
+                   )) <= :radius and ( l.volume_atual/l.volume_maximo )  >= :minimo_volume_preenchido_porcentagem_decimal
+            ORDER BY (6371 * acos(
+                       cos(radians(:lat)) * cos(radians(l.latitude)) *
+                       cos(radians(l.longitude) - radians(:lon)) +
+                       sin(radians(:lat)) * sin(radians(l.latitude))
+                   )) ASC
+            """, nativeQuery = true)
     List<Lixeira> findNearbyLixeiras(
             @Param("lat") double latitude,
             @Param("lon") double longitude,
@@ -46,5 +46,9 @@ public interface LixeiraRepository extends JpaRepository<Lixeira, String> {
             @Param("minimo_volume_preenchido_porcentagem_decimal") double minimoVolume
     );
 
-
+    @Query(value = """
+            SELECT l.*
+            FROM lixeira l
+            """, nativeQuery = true)
+    List<Lixeira> findAllLixeiras();
 }
