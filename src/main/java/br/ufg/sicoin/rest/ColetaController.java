@@ -19,8 +19,8 @@ public class ColetaController {
     private final ColetaService coletaService;
 
     @PostMapping("/informar")
-    public ResponseEntity<Map<String,String>> informarPossivelColeta(@RequestBody RequisicaoInformarPossivelColetaDTO possivelColetaDTO){
+    public ResponseEntity<Void> informarPossivelColeta(@RequestBody RequisicaoInformarPossivelColetaDTO possivelColetaDTO){
         coletaService.emitirEventoColeta(possivelColetaDTO);
-        return ResponseEntity.ok(Map.of("status","Coleta emitida com sucesso!"));
+        return ResponseEntity.ok(null);
     }
 }
