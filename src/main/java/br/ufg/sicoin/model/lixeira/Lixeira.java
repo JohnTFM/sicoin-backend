@@ -50,4 +50,6 @@ public class Lixeira {
 
     Instant momentoUltimaColeta;
 
+    String descricao;
+
 }

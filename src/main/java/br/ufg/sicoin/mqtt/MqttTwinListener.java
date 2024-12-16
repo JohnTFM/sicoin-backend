@@ -44,7 +44,7 @@ public class MqttTwinListener implements MqttCallback {
             );
 
         }catch (Exception e){
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
     }
