@@ -30,8 +30,6 @@ public class ColetaService {
 
     private final LixeiraRepository lixeiraRepository;
 
-    private final ColetaEventRepository coletaEventRepository;
-
     public void emitirEventoColeta(RequisicaoInformarPossivelColetaDTO requisicaoInformarPossivelColetaDTO){
 
         ColetaCaminhaoEvent coletaEvent = new ColetaCaminhaoEvent(
