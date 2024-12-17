@@ -10,4 +10,21 @@ public class LixeiraSinalDTO {
     Double volumeAtual;
     Double pesoAtual;
     long timestamp;
+
+
+    public Double getVolumeAtual() {
+        if(volumeAtual == null) {
+            return 0.0;
+        }
+        return volumeAtual;
+    }
+
+    public Double getPesoAtual() {
+
+        if(pesoAtual == null) {
+            return 0.0;
+        }
+        return pesoAtual;
+    }
+
 }

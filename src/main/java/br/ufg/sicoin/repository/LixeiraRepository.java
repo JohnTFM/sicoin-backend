@@ -46,6 +46,11 @@ public interface LixeiraRepository extends JpaRepository<Lixeira, String> {
             @Param("minimo_volume_preenchido_porcentagem_decimal") double minimoVolume
     );
 
+
+
+    @Query("update Lixeira set momentoUltimaColeta = :agora where id = :lixeiraId")
+    @Modifying
+    void setarUltimaColeta(String lixeiraId,Instant agora);
     @Query(value = """
             SELECT l.*
             FROM lixeira l

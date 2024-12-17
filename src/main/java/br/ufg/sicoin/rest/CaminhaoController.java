@@ -1,10 +1,7 @@
 package br.ufg.sicoin.rest;
 
-import br.ufg.sicoin.dto.RequisicaoRotaDTO;
-import br.ufg.sicoin.dto.RequisicaoDescobrirLixeirasDTO;
-import br.ufg.sicoin.dto.RespostaDescobrirLixeiraDTO;
-import br.ufg.sicoin.dto.RespostaRotaDTO;
-import br.ufg.sicoin.model.caminhao.EstadoCaminhao;
+import br.ufg.sicoin.dto.*;
+import br.ufg.sicoin.model.caminhao.Caminhao;
 import br.ufg.sicoin.service.CaminhaoService;
 import br.ufg.sicoin.service.GoogleMapsService;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +23,7 @@ public class CaminhaoController {
     }
 
     @PostMapping("/descobrir-lixeiras")
-    public ResponseEntity<RespostaRotaDTO> informar(@RequestBody RequisicaoDescobrirLixeirasDTO informarCaminhaoDTO){
-
-        caminhaoService.atualizarDados(informarCaminhaoDTO);
-
-        if(!informarCaminhaoDTO.getEstadoCaminhao().equals(EstadoCaminhao.EM_ROTA)){
-            return ResponseEntity.ok(null);
-        }
+    public ResponseEntity<RespostaRotaDTO> descobrirLixeiras(@RequestBody RequisicaoDescobrirLixeirasDTO informarCaminhaoDTO){
 
         var lixeirasCheiasWrapper = caminhaoService.verificarLixeirasCheias(informarCaminhaoDTO);
 
@@ -41,7 +32,7 @@ public class CaminhaoController {
             requisicaoRotaDTO.setKilometrosLimite(informarCaminhaoDTO.getDistanciaMaximaLixeira());
             requisicaoRotaDTO.setLatitude(informarCaminhaoDTO.getLatitude());
             requisicaoRotaDTO.setLongitude(informarCaminhaoDTO.getLongitude());
-            return ResponseEntity.ok(googleMapsService.criarRota(requisicaoRotaDTO));
+            return ResponseEntity.ok(googleMapsService.criarRota(requisicaoRotaDTO,informarCaminhaoDTO.getVolumeMinimoLixeira()));
         }
 
         RespostaRotaDTO response = new RespostaRotaDTO();
@@ -50,6 +41,12 @@ public class CaminhaoController {
 
         return ResponseEntity.ok(response);
 
+    }
+
+    @PostMapping("/registrar-estado-caminhao")
+    public ResponseEntity<CaminhaoDTO> alterarEstadoCaminhao(@RequestBody RequisicaoIniciarRotaDTO requisicaoIniciarRotaDTO){
+
+        return ResponseEntity.ok(new CaminhaoDTO(caminhaoService.atualizarDados(requisicaoIniciarRotaDTO)));
     }
 
 

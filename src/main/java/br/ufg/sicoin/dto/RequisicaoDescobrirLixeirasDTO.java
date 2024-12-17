@@ -9,15 +9,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class RequisicaoDescobrirLixeirasDTO extends GeolocalizacaoDTO {
-
-    Long idCaminhao;
-
-    EstadoCaminhao estadoCaminhao;
+public class RequisicaoDescobrirLixeirasDTO  implements Geolocalizado {
 
     Double distanciaMaximaLixeira;
 
     Double volumeMinimoLixeira;
+
+    Double latitude;
+
+    Double longitude;
 
 }

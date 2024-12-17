@@ -52,4 +52,18 @@ public class Lixeira {
 
     String descricao;
 
+    public Double getVolumeAtual() {
+        if(volumeAtual == null) {
+            return 0.0;
+        }
+        return volumeAtual;
+    }
+
+    public Double getPesoAtual() {
+
+        if(pesoAtual == null) {
+            return 0.0;
+        }
+        return pesoAtual;
+    }
 }

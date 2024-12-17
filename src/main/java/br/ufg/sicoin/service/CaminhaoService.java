@@ -1,5 +1,6 @@
 package br.ufg.sicoin.service;
 
+import br.ufg.sicoin.dto.AtualizaEstadoCaminhao;
 import br.ufg.sicoin.dto.RequisicaoDescobrirLixeirasDTO;
 import br.ufg.sicoin.dto.RespostaDescobrirLixeiraDTO;
 import br.ufg.sicoin.model.evento.FinalizarColetaEvent;
@@ -26,7 +27,7 @@ public class CaminhaoService {
     private final LixeiraService lixeiraService;
 
     @Transactional
-    public void atualizarDados(RequisicaoDescobrirLixeirasDTO informarCaminhaoDTO) {
+    public Caminhao atualizarDados(AtualizaEstadoCaminhao informarCaminhaoDTO) {
        Caminhao caminhaoAtualizar = caminhaoRepository.findById(informarCaminhaoDTO.getIdCaminhao()).orElseThrow(()->new CaminhaoAusenteException(informarCaminhaoDTO.getIdCaminhao()));
 
        boolean iniciouRota = !caminhaoAtualizar.getEstado().equals(EstadoCaminhao.EM_ROTA) && informarCaminhaoDTO.getEstadoCaminhao().equals(EstadoCaminhao.EM_ROTA);
@@ -44,6 +45,7 @@ public class CaminhaoService {
        caminhaoAtualizar.setLatitudeAtual(informarCaminhaoDTO.getLatitude());
        caminhaoAtualizar.setLongitudeAtual(informarCaminhaoDTO.getLongitude());
 
+       return caminhaoAtualizar;
     }
 
     public RespostaDescobrirLixeiraDTO verificarLixeirasCheias(RequisicaoDescobrirLixeirasDTO informarCaminhaoDTO) {
