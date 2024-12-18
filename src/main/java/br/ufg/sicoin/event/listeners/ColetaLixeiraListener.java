@@ -1,6 +1,6 @@
 package br.ufg.sicoin.event.listeners;
 
-import br.ufg.sicoin.event.events.ColetaLixeiraEvent;
+import br.ufg.sicoin.event.transients.ColetaLixeiraEvent;
 import br.ufg.sicoin.model.evento.ColetaEvent;
 import br.ufg.sicoin.model.evento.StatusColetaEvento;
 import br.ufg.sicoin.repository.ColetaEventRepository;

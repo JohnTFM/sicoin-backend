@@ -8,6 +8,7 @@ import br.ufg.sicoin.service.ColetaService;
 import br.ufg.sicoin.service.LixeiraService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,4 +42,12 @@ public class RelatorioController {
     {
         return coletaService.obterTodosOsColetaEvents();
     }
+
+    @GetMapping("/coleta-events-por-lixeira/{lixeiraId}")
+    public List<ColetaEvent> obterColetaEventsPorLixeira(@PathVariable String lixeiraId){
+
+        return coletaService.getColetaEventRepository().findAllByLixeiraId(lixeiraId);
+
+    }
+
 }

@@ -23,4 +23,6 @@ public interface ColetaEventRepository extends CrudRepository<ColetaEvent, Long>
             FROM coleta_event ce
             """, nativeQuery = true)
     List<ColetaEvent> findAllColetaEvents();
+
+    List<ColetaEvent> findAllByLixeiraId(String lixeiraId);
 }

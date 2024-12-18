@@ -8,6 +8,7 @@ import br.ufg.sicoin.model.evento.IniciarColetaEvent;
 import br.ufg.sicoin.exceptions.CaminhaoAusenteException;
 import br.ufg.sicoin.model.caminhao.Caminhao;
 import br.ufg.sicoin.model.caminhao.EstadoCaminhao;
+import br.ufg.sicoin.model.evento.LocalizacaoCaminhaoEvent;
 import br.ufg.sicoin.repository.CaminhaoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,12 @@ public class CaminhaoService {
        if(finalizouRota){
            applicationEventPublisher.publishEvent(new FinalizarColetaEvent(caminhaoAtualizar));
        }
+
+       applicationEventPublisher.publishEvent(new LocalizacaoCaminhaoEvent(
+               caminhaoAtualizar,
+               informarCaminhaoDTO.getLatitude(),
+               informarCaminhaoDTO.getLongitude()
+       ));
 
        caminhaoAtualizar.setEstado(informarCaminhaoDTO.getEstadoCaminhao());
        caminhaoAtualizar.setLatitudeAtual(informarCaminhaoDTO.getLatitude());

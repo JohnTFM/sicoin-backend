@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data
-public class ColetaEvent extends EventoSicoin{
+public class ColetaEvent extends EventoSicoin {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "liexeira_id")
     Lixeira lixeira;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "caminhao_id")
     Caminhao caminhao;
 

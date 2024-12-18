@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequisicaoDescobrirLixeirasDTO  implements Geolocalizado {
+public class RequisicaoDescobrirLixeirasDTO  implements AtualizaEstadoCaminhao {
 
     Double distanciaMaximaLixeira;
 
@@ -18,5 +18,9 @@ public class RequisicaoDescobrirLixeirasDTO  implements Geolocalizado {
     Double latitude;
 
     Double longitude;
+
+    Long idCaminhao;
+
+    EstadoCaminhao estadoCaminhao;
 
 }

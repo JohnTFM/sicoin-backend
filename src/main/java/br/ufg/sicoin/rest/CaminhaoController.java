@@ -25,6 +25,8 @@ public class CaminhaoController {
     @PostMapping("/descobrir-lixeiras")
     public ResponseEntity<RespostaRotaDTO> descobrirLixeiras(@RequestBody RequisicaoDescobrirLixeirasDTO informarCaminhaoDTO){
 
+        caminhaoService.atualizarDados(informarCaminhaoDTO);
+
         var lixeirasCheiasWrapper = caminhaoService.verificarLixeirasCheias(informarCaminhaoDTO);
 
         if(!lixeirasCheiasWrapper.getLixeirasProximasPreenchidas().isEmpty()){

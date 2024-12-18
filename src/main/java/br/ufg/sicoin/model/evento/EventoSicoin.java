@@ -17,7 +17,8 @@ import java.time.Instant;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "tipo")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = IniciarColetaEvent.class, name = "IniciarColetaEvent"),
-        @JsonSubTypes.Type(value = FinalizarColetaEvent.class, name = "FinalizarColetaEvent")
+        @JsonSubTypes.Type(value = FinalizarColetaEvent.class, name = "FinalizarColetaEvent"),
+        @JsonSubTypes.Type(value = LocalizacaoCaminhaoEvent.class, name = "LocalizacaoCaminhaoEvent")
 })
 public abstract class EventoSicoin {
 

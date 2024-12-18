@@ -1,7 +1,6 @@
 package br.ufg.sicoin.event.listeners;
 
 import br.ufg.sicoin.model.evento.IniciarColetaEvent;
-import br.ufg.sicoin.repository.CaminhaoRepository;
 import br.ufg.sicoin.repository.IniciarColetaEventRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

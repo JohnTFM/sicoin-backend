@@ -1,5 +1,6 @@
 package br.ufg.sicoin.repository;
 
+import br.ufg.sicoin.model.evento.ColetaEvent;
 import br.ufg.sicoin.model.lixeira.Lixeira;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -56,4 +57,6 @@ public interface LixeiraRepository extends JpaRepository<Lixeira, String> {
             FROM lixeira l
             """, nativeQuery = true)
     List<Lixeira> findAllLixeiras();
+
+
 }

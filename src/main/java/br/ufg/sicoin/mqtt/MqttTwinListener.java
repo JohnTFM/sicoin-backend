@@ -1,14 +1,12 @@
 package br.ufg.sicoin.mqtt;
 
 import br.ufg.sicoin.dto.mqtt.LixeiraSinalDTO;
-import br.ufg.sicoin.event.events.ColetaLixeiraEvent;
-import br.ufg.sicoin.model.evento.ColetaEvent;
+import br.ufg.sicoin.event.transients.ColetaLixeiraEvent;
 import br.ufg.sicoin.model.lixeira.Lixeira;
 import br.ufg.sicoin.repository.ColetaEventRepository;
 import br.ufg.sicoin.repository.LixeiraRepository;
 import br.ufg.sicoin.service.LixeiraService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -17,10 +15,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.List;
 import java.util.Optional;
 
 @Component

@@ -1,4 +1,4 @@
-package br.ufg.sicoin.event.events;
+package br.ufg.sicoin.event.transients;
 
 import br.ufg.sicoin.model.caminhao.Caminhao;
 import br.ufg.sicoin.model.lixeira.Lixeira;

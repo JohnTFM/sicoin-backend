@@ -1,13 +1,12 @@
 package br.ufg.sicoin.service;
 
 import br.ufg.sicoin.dto.RequisicaoInformarPossivelColetaDTO;
-import br.ufg.sicoin.event.events.ColetaCaminhaoEvent;
-import br.ufg.sicoin.model.caminhao.Caminhao;
+import br.ufg.sicoin.event.transients.ColetaCaminhaoEvent;
 import br.ufg.sicoin.model.evento.ColetaEvent;
 import br.ufg.sicoin.repository.CaminhaoRepository;
 import br.ufg.sicoin.repository.ColetaEventRepository;
 import br.ufg.sicoin.repository.LixeiraRepository;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -16,12 +15,11 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class ColetaService {
 
+    @Getter
     private final ColetaEventRepository coletaEventRepository;
 
     private final ApplicationEventPublisher applicationEventPublisher;

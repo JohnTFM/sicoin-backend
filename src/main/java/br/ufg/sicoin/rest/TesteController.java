@@ -1,7 +1,7 @@
 package br.ufg.sicoin.rest;
 
-import br.ufg.sicoin.event.events.ColetaCaminhaoEvent;
-import br.ufg.sicoin.event.events.ColetaLixeiraEvent;
+import br.ufg.sicoin.event.transients.ColetaCaminhaoEvent;
+import br.ufg.sicoin.event.transients.ColetaLixeiraEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
