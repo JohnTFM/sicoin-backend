@@ -18,9 +18,10 @@ services:
     environment:
       <<: *shared-env
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sicoin
-      SICOIN_MQTT_HOST: 18.214.23.5:1883
+      SICOIN_MQTT_HOST: 52.201.140.232:1883
       SICOIN_GOOGLE_MAPS_HOST: https://maps.googleapis.com/maps/api/directions
       SICOIN_GOOGLE_API_KEY: ${SICOIN_GOOGLE_API_KEY}
+      CRIAR_DADOS: ${CRIAR_DADOS:-false} # Valor padrão é "false" se CRIAR_DADOS não estiver definido
     depends_on:
       - postgres
   postgres:
