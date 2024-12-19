@@ -18,6 +18,9 @@ services:
     environment:
       <<: *shared-env
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sicoin
+      SICOIN_MQTT_HOST: 18.214.23.5:1883
+      SICOIN_GOOGLE_MAPS_HOST: https://maps.googleapis.com/maps/api/directions
+      SICOIN_GOOGLE_API_KEY: ${SICOIN_GOOGLE_API_KEY}
     depends_on:
       - postgres
   postgres:
