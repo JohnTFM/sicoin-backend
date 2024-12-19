@@ -36,7 +36,7 @@ public class GoogleMapsService {
     String googleMapsHost;
 
     public RespostaRotaDTO criarRota(RequisicaoRotaDTO geolocalizacao){
-        double minimoVolume = 0.015;
+        double minimoVolume = 0.40;
         return criarRota(geolocalizacao,minimoVolume);
     }
 
