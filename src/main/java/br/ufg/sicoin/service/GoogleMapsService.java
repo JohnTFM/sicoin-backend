@@ -35,6 +35,7 @@ public class GoogleMapsService {
     @Value("${sicoin.google-maps-host-json}")
     String googleMapsHost;
 
+    @Transactional
     public RespostaRotaDTO criarRota(RequisicaoRotaDTO geolocalizacao){
         double minimoVolume = 0.40;
         return criarRota(geolocalizacao,minimoVolume);
